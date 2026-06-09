@@ -76,7 +76,8 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages:
-            - javascript-typescript
+            - javascript
+            - typescript
             - python
 
       - name: Perform CodeQL Analysis
