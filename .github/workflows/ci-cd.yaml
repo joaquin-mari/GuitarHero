@@ -70,15 +70,15 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # provided automatically by GitHub
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v4
+      - uses: softprops/action-gh-release@v2
         with:
-          name: dist
-          path: dist
+          name: Dev Build ${{ github.sha }}
+          tag_name: dev-${{ github.sha }}
+          prerelease: true
       - id: create_release
-        uses: softprops/action-gh-release
+        uses: softprops/action-gh-release@v2
         with:
           title: Dev Build ${{ github.sha }}
           tag: dev-${{ github.sha }}
