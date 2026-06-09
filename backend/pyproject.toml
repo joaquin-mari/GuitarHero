@@ -7,4 +7,42 @@ requires-python = ">=3.13"
 dependencies = [
     "fastapi[standard]>=0.136.3",
     "psycopg[binary]>=3.3.4",
+    "ruff>=0.15.16",
+    "sqlfluff>=4.2.2",
 ]
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+# folders to include
+include = ["*.py"]
+
+# folders to ignore
+exclude = [
+    ".venv",
+    "__pycache__",
+    "alembic",
+    "dist",
+]
+
+[tool.ruff.lint]
+# rule sets (this is the important part)
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # import sorting (isort replacement)
+    "B",   # bugbear (common bugs)
+    "UP",  # pyupgrade (modern Python)
+]
+
+ignore = [
+    "E501",  # line length handled by formatter
+]
+
+[tool.ruff.format]
+# enables auto formatting (like black)
+quote-style = "double"
+indent-style = "space"
+
+[dependency-groups]
+dev = []
