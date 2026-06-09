@@ -9,6 +9,9 @@
 venv/
 env/
 
+.sh
+sh-commands
+
 __pycache__
 
 node_modules/

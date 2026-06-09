@@ -1,0 +1,83 @@
+name: CI/CD Pipeline
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+permissions:
+  contents: write
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        working-directory: client
+        run: npm install
+
+      - name: Run linter
+        working-directory: client
+        run: npm run lint
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.13
+
+      - name: Install uv
+        working-directory: backend
+        run: pip install uv
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: uv sync
+
+      - name: Install ruff
+        working-directory: backend
+        run: uv run ruff check .
+
+      - name: Install sqlfluff
+        run: uv run sqlfluff lint sql/init.sql
+
+  build:
+    needs: [lint]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with: { node-version: 16 }
+      - run: npm install
+        working-directory: client
+      - run: npm run build
+        working-directory: client
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: client/dist/
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+      - id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          title: Dev Build ${{ github.sha }}
+          tag: dev-${{ github.sha }}
+          prerelease: true
