@@ -11,7 +11,6 @@ permissions:
 jobs:
   lint:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -47,8 +46,7 @@ jobs:
         run: uv run ruff check .
 
       - name: Install sqlfluff
-        working-directory: backend
-        run: uv run sqlfluff lint ../sql/init.sql
+        run: uv run sqlfluff lint sql/init.sql
 
   build:
     needs: [lint]
