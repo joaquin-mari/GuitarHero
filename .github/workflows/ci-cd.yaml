@@ -48,8 +48,74 @@ jobs:
       - name: Install sqlfluff
         run: uv run sqlfluff lint sql/init.sql
 
+  security-scan:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+
+    - name: Install frontend dependencies
+      working-directory: client
+      run: npm install
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.13"
+
+    - name: Install backend dependencies
+      working-directory: backend
+      run: pip install uv && uv sync
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages:
+          - javascript-typescript
+          - python
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        working-directory: client
+        run: npm install
+
+      - name: Run tests
+        working-directory: client
+        run: npm test
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.13"
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: pip install uv && uv sync
+
+      - name: Run backend tests
+        working-directory: backend
+        run: uv run pytest
+
   build:
-    needs: [lint]
+    needs: [lint, security-scan, test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
