@@ -13,6 +13,7 @@ services:
     restart: unless-stopped
 
   backend:
+    build: ./backend
     image: guitar-backend
     env_file:
       - .env.production
@@ -27,6 +28,7 @@ services:
     restart: unless-stopped
 
   frontend:
+    build: ./client
     image: guitar-frontend
     env_file:
       - .env.production
