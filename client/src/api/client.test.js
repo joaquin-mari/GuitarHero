@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { getRandomNote } from "./api";
+import { getRandomNote } from "./client";
 
 describe("getRandomNote", () => {
   it("calls the correct endpoint", async () => {
