@@ -16,7 +16,7 @@ const NOTE_STRINGS = [
   "B",
 ];
 
-function frequencyToNote(freq: number) {
+export function frequencyToNote(freq: number) {
   const A4 = 440;
   const noteNumber = 12 * Math.log2(freq / A4) + 69;
   const index = Math.round(noteNumber) % 12;

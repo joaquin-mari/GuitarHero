@@ -18,7 +18,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 22
 
       - name: Install dependencies
         working-directory: client
@@ -57,7 +57,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 22
 
       - name: Install frontend dependencies
         working-directory: client
@@ -73,10 +73,11 @@ jobs:
         run: pip install uv && uv sync
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@v4
         with:
           languages: |
-            javascript-typescript
+            javascript
+            typescript
             python
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
@@ -90,7 +91,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 22
 
       - name: Install dependencies
         working-directory: client
@@ -98,12 +99,12 @@ jobs:
 
       - name: Run tests
         working-directory: client
-        run: npm test
+        run: npm test -- --run
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.13"
+          python-version: 3.13
 
       - name: Install backend dependencies
         working-directory: backend
