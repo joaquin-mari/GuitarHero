@@ -1,9 +1,7 @@
-
-
-CREATE TABLE practice_sessions (
-    id SERIAL PRIMARY KEY,
-    duration INTEGER NOT NULL,
-    correct_notes INTEGER NOT NULL,
-    incorrect_notes INTEGER NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW()
+create table practice_sessions (
+    id SERIAL primary key,
+    duration INTEGER not null,
+    correct_notes INTEGER not null,
+    incorrect_notes INTEGER not null,
+    created_at TIMESTAMP default NOW()
 );

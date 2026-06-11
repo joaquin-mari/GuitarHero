@@ -1,0 +1,33 @@
+# .sqlfluff
+
+[sqlfluff]
+dialect = postgres
+templater = jinja
+max_line_length = 100
+
+# Enable parallel processing
+processes = -1
+
+# Rules that often create noise in small projects
+exclude_rules = ambiguous.column_count
+
+[sqlfluff:indentation]
+tab_space_size = 4
+
+[sqlfluff:layout:type:comma]
+line_position = trailing
+
+[sqlfluff:rules:capitalisation.keywords]
+capitalisation_policy = lower
+
+[sqlfluff:rules:capitalisation.identifiers]
+extended_capitalisation_policy = lower
+
+[sqlfluff:rules:capitalisation.functions]
+capitalisation_policy = lower
+
+[sqlfluff:rules:aliasing.table]
+aliasing = explicit
+
+[sqlfluff:rules:aliasing.column]
+aliasing = explicit

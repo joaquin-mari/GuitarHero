@@ -46,7 +46,7 @@ jobs:
         run: uv run ruff check .
 
       - name: Install sqlfluff
-        run: uv run sqlfluff lint sql/init.sql
+        run: uv run sqlfluff lint ../sql/init.sql
 
   security-scan:
     runs-on: ubuntu-latest

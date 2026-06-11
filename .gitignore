@@ -13,6 +13,8 @@ env/
 sh-commands
 
 __pycache__
+.pytest_cache
+.ruff_cache
 
 node_modules/
 npm-debug.log*
