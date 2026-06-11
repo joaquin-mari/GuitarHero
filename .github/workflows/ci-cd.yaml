@@ -144,6 +144,6 @@ jobs:
       - id: create_release
         uses: softprops/action-gh-release@v2
         with:
-          title: Dev Build ${{ github.sha }}
-          tag: dev-${{ github.sha }}
+          name: Dev Build ${{ github.sha }}
+          tag_name: dev-${{ github.sha }}
           prerelease: true
