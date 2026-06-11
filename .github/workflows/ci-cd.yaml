@@ -6,7 +6,7 @@ on:
     types: [opened, synchronize]
 
 permissions:
-  contents: write
+  actions: read
   contents: read
 
 jobs:
