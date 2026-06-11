@@ -47,6 +47,7 @@ jobs:
         run: uv run ruff check .
 
       - name: Install sqlfluff
+        working-directory: backend
         run: uv run sqlfluff lint ../sql/init.sql
 
   security-scan:
