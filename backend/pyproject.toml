@@ -25,6 +25,7 @@ exclude = [
     "__pycache__",
     "alembic",
     "dist",
+    "sqlfluff",
 ]
 
 [tool.ruff.lint]
