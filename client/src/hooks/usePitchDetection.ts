@@ -23,11 +23,19 @@ export function frequencyToNote(freq: number) {
   return NOTE_STRINGS[index];
 }
 
-export function usePitchDetection(enabled: boolean) {
+export function usePitchDetection(
+  enabled: boolean,
+  onDetected?: (note: string) => void,
+) {
   const [note, setNote] = useState<string>("");
 
   const lastNotes = useRef<string[]>([]);
   const lastEmitTime = useRef<number>(0);
+  const onDetectedRef = useRef(onDetected);
+
+  useEffect(() => {
+    onDetectedRef.current = onDetected;
+  }, [onDetected]);
 
   useEffect(() => {
     if (!enabled) return;
@@ -75,7 +83,6 @@ export function usePitchDetection(enabled: boolean) {
 
         const volume = getVolume(buffer);
 
-        // 1. silence gate
         if (volume < MIN_VOLUME) {
           lastNotes.current = [];
           animationId = requestAnimationFrame(update);
@@ -87,7 +94,6 @@ export function usePitchDetection(enabled: boolean) {
           audioContext.sampleRate,
         );
 
-        // 2. reject weak detections
         if (clarity < MIN_CLARITY || pitch < MIN_PITCH) {
           animationId = requestAnimationFrame(update);
           return;
@@ -95,7 +101,6 @@ export function usePitchDetection(enabled: boolean) {
 
         const detected = frequencyToNote(pitch);
 
-        // 3. build stability buffer
         lastNotes.current.push(detected);
         if (lastNotes.current.length > NOTE_BUFFER_SIZE) {
           lastNotes.current.shift();
@@ -110,7 +115,6 @@ export function usePitchDetection(enabled: boolean) {
           return;
         }
 
-        // 4. cooldown (prevents spam triggers)
         const now = Date.now();
         if (now - lastEmitTime.current < COOLDOWN_MS) {
           animationId = requestAnimationFrame(update);
@@ -120,6 +124,7 @@ export function usePitchDetection(enabled: boolean) {
         lastEmitTime.current = now;
 
         setNote(detected);
+        onDetectedRef.current?.(detected);
 
         animationId = requestAnimationFrame(update);
       };

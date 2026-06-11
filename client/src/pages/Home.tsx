@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ChordCard from "../components/ChordChard";
 import Timer from "../components/Timer";
 import { getRandomNote, saveSession } from "../api/client";
@@ -13,8 +13,6 @@ export default function Home() {
 
   const [correctNotes, setCorrectNotes] = useState(0);
   const [incorrectNotes, setIncorrectNotes] = useState(0);
-
-  const detectedNote = usePitchDetection(gameStarted);
 
   async function loadNote() {
     const data = await getRandomNote();
@@ -43,6 +41,17 @@ export default function Home() {
     await loadNote();
   }
 
+  const detectedNote = usePitchDetection(gameStarted, (detected) => {
+    if (!targetNote) return;
+
+    if (detected === targetNote) {
+      void handleCorrect();
+      return;
+    }
+
+    void handleIncorrect();
+  });
+
   async function stopPractice() {
     if (!startTime) return;
 
@@ -59,15 +68,6 @@ export default function Home() {
     setTargetNote("");
     setStartTime(null);
   }
-
-  const isCorrect = gameStarted && detectedNote && detectedNote === targetNote;
-
-  useEffect(() => {
-    if (!detectedNote) return;
-
-    if (isCorrect) handleCorrect();
-    else handleIncorrect();
-  }, [isCorrect]);
 
   if (!gameStarted) {
     return (

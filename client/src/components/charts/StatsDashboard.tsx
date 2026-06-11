@@ -14,13 +14,10 @@ type StatRow = {
 export default function StatsDashboard() {
   const [stats, setStats] = useState<StatRow[]>([]);
 
-  async function loadStats() {
-    const data = await getStats();
-    setStats(data);
-  }
-
   useEffect(() => {
-    loadStats();
+    void getStats().then((data) => {
+      setStats(data);
+    });
   }, []);
 
   const chartData = stats.map((row) => {
