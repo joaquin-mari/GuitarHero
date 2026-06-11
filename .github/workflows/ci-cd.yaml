@@ -130,20 +130,18 @@ jobs:
           name: dist
           path: client/dist/
 
-  release:
+  deploy:
     needs: build
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v4
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          name: dist
-          path: dist
-      - id: create_release
-        uses: softprops/action-gh-release@v2
-        with:
-          name: Dev Build ${{ github.sha }}
-          tag_name: dev-${{ github.sha }}
-          prerelease: true
+          host: ${{ secrets.DIGITALOCEAN_HOST }}
+          username: root
+          key: ${{ secrets.DIGITALOCEAN_SSH }}
+          script: |
+            cd /var/www/your-app
+            git pull
+            docker compose up -d --build
