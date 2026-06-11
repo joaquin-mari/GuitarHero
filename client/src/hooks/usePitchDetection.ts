@@ -34,7 +34,7 @@ export function usePitchDetection(enabled: boolean) {
 
     let audioContext: AudioContext;
     let analyser: AnalyserNode;
-    let detector: any;
+    let detector: ReturnType<typeof PitchDetector.forFloat32Array>;
     let mediaStream: MediaStream;
     let animationId: number;
 

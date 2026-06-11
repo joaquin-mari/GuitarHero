@@ -1,7 +1,9 @@
+import random
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
 from app.db import get_conn
-import random
 from app.schemas import SessionCreate
 
 app = FastAPI(title="Guitar Practice API")
@@ -33,7 +35,7 @@ def get_random_note():
     "F#",
     "G",
     "G#",
-    ];
+    ]
     return {"note": random.choice(notes)}
 
 @app.post("/sessions")

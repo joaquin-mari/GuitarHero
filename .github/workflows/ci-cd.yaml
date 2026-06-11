@@ -95,9 +95,9 @@ jobs:
         working-directory: client
         run: npm install
 
-      - name: Run tests
+      - name: Run client tests
         working-directory: client
-        run: npm test -- --run
+        run: npm run test
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -110,7 +110,7 @@ jobs:
 
       - name: Run backend tests
         working-directory: backend
-        run: uv run pytest
+        run: uv run python -m pytest
 
   build:
     needs: [lint, security-scan, test]

@@ -60,18 +60,14 @@ export default function Home() {
     setStartTime(null);
   }
 
+  const isCorrect = gameStarted && detectedNote && detectedNote === targetNote;
+
   useEffect(() => {
-    if (!gameStarted) return;
     if (!detectedNote) return;
 
-    if (detectedNote.length < 1) return;
-
-    if (detectedNote === targetNote) {
-      handleCorrect();
-    } else {
-      handleIncorrect();
-    }
-  }, [detectedNote]);
+    if (isCorrect) handleCorrect();
+    else handleIncorrect();
+  }, [isCorrect]);
 
   if (!gameStarted) {
     return (

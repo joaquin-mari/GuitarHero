@@ -14,14 +14,14 @@ type StatRow = {
 export default function StatsDashboard() {
   const [stats, setStats] = useState<StatRow[]>([]);
 
-  useEffect(() => {
-    loadStats();
-  }, []);
-
   async function loadStats() {
     const data = await getStats();
     setStats(data);
   }
+
+  useEffect(() => {
+    loadStats();
+  }, []);
 
   const chartData = stats.map((row) => {
     const total = row.correct_notes + row.incorrect_notes;
