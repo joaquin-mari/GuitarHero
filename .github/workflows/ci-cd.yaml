@@ -148,6 +148,6 @@ jobs:
           username: root
           key: ${{ secrets.DIGITALOCEAN_SSH }}
           script: |
-            cd /var/www/your-app
+            cd GuitarHero
             git pull
             docker compose up -d --build
