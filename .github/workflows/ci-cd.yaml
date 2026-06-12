@@ -154,4 +154,4 @@ jobs:
           script: |
             cd GuitarHero
             git pull
-            docker compose -f docker-compose.yml -f docker-compose.monitoring.yml up -d
+            docker compose -f compose.yml -f compose.monitoring.yml up -d
