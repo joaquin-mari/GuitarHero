@@ -135,6 +135,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check secrets
+        run: |
+          echo "Host configured: ${{ secrets.DIGITALOCEAN_HOST != '' }}"
+          echo "SSH key length: ${#SSH_KEY}"
+        env:
+          SSH_KEY: ${{ secrets.DIGITALOCEAN_SSH }}
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
