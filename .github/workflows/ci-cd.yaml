@@ -147,6 +147,7 @@ jobs:
           host: ${{ secrets.DIGITALOCEAN_HOST }}
           username: root
           key: ${{ secrets.DIGITALOCEAN_SSH }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             cd GuitarHero
             git pull
