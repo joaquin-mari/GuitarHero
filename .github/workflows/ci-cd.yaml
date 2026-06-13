@@ -154,4 +154,4 @@ jobs:
           script: |
             cd GuitarHero
             git pull
-            docker compose -f compose.yaml -f compose.monitoring.yaml up -d
+            docker compose --env-file .env.production -f compose.yaml -f compose.monitoring.yaml up -d
