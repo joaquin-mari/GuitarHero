@@ -7,7 +7,6 @@ services:
     networks:
       - monitoring-net
     ports:
-    ports:
       - 127.0.0.1:9090:9090
 
   node-exporter:
