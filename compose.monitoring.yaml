@@ -7,19 +7,6 @@ services:
     networks:
       - monitoring-net
 
-  grafana:
-    image: grafana/grafana
-    container_name: grafana
-    environment:
-      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER}
-      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
-      - GF_SERVER_ROOT_URL=http://164.90.234.68/grafana/
-      - GF_SERVER_SERVE_FROM_SUB_PATH=true
-    networks:
-      - monitoring-net
-    volumes:
-      - grafana-data:/var/lib/grafana
-
   node-exporter:
     image: prom/node-exporter
     container_name: node-exporter
