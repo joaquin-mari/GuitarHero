@@ -44,8 +44,7 @@ services:
     volumes:
       - ./nginx_proxy.conf:/etc/nginx/conf.d/default.conf
     depends_on:
-      backend:
-        condition: service_healthy
+      - backend
     networks:
       - monitoring-net
     restart: unless-stopped
