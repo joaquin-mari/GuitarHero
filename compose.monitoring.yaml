@@ -17,6 +17,9 @@ services:
       - monitoring-net
     volumes:
       - grafana-data:/var/lib/grafana
+    environment:
+      - GF_SERVER_ROOT_URL=http://164.90.234.68/grafana/
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
 
   node-exporter:
     image: prom/node-exporter
