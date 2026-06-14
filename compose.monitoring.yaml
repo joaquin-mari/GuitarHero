@@ -13,13 +13,12 @@ services:
     environment:
       - GF_SECURITY_ADMIN_USER=${GRAFANA_USER}
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+      - GF_SERVER_ROOT_URL=http://164.90.234.68/grafana/
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
     networks:
       - monitoring-net
     volumes:
       - grafana-data:/var/lib/grafana
-    environment:
-      - GF_SERVER_ROOT_URL=http://164.90.234.68/grafana/
-      - GF_SERVER_SERVE_FROM_SUB_PATH=true
 
   node-exporter:
     image: prom/node-exporter
