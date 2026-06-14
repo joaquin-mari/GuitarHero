@@ -11,6 +11,8 @@ services:
       timeout: 5s
       retries: 5
     restart: unless-stopped
+    networks:
+      - monitoring-net
 
   backend:
     build: ./backend
@@ -26,6 +28,8 @@ services:
       db:
         condition: service_healthy
     restart: unless-stopped
+    networks:
+      - monitoring-net
 
   frontend:
     build: ./client
@@ -35,6 +39,8 @@ services:
     depends_on:
       - backend
     restart: unless-stopped
+    networks:
+      - monitoring-net
 
   nginx:
     image: nginx:alpine
@@ -45,4 +51,10 @@ services:
     depends_on:
       backend:
         condition: service_healthy
+    networks:
+      - monitoring-net
     restart: unless-stopped
+
+networks:
+  monitoring-net:
+    external: true
