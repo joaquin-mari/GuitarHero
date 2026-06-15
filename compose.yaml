@@ -25,6 +25,8 @@ services:
     restart: unless-stopped
     networks:
       - monitoring-net
+    ports:
+      - 8000:8000
 
   frontend:
     build: ./client

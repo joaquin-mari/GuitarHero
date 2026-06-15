@@ -7,6 +7,10 @@ scrape_configs:
     static_configs:
       - targets: ["node-exporter:9100"]
 
-  # - job_name: "nginx"
-  #   static_configs:
-  #     - targets: ["nginxexporter:9113"]
+  - job_name: "nginx"
+    static_configs:
+      - targets: ["nginxexporter:9113"]
+
+  - job_name: "backend"
+    static_configs:
+      - targets: ["backend:8000"]
