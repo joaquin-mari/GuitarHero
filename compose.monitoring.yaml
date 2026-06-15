@@ -15,6 +15,14 @@ services:
     networks:
       - monitoring-net
 
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter
+    container_name: nginx-exporter
+    networks:
+      - monitoring-net
+    command:
+      - nginx.scrape-uri=http://nginx:8080/stub_status
+
 networks:
   monitoring-net:
     external: true
