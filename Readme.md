@@ -11,13 +11,12 @@ The application itself is intentionally simple so the focus stays on the infrast
 - Track guitar practice sessions (duration, correct/incorrect notes)
 - Generate random notes for practice
 - View weekly practice statistics
-- Expose backend metrics for monitoring
-
+  
 ---
 
 ## 🧱 Tech Stack
 
-### Application (kept simple on purpose)
+### Application
 
 - React (Vite)
 - FastAPI
@@ -84,14 +83,13 @@ On every push to `master`:
 
 ---
 
-## 🌐 Services
+## 🌐 Service Architecture
 
-- Frontend → http://localhost
-- Backend → http://localhost:8000
-- Grafana → http://localhost:3000
-- Prometheus → http://localhost:9090
-
----
+- User traffic is routed through Nginx reverse proxy  
+- Frontend is served via containerized React build  
+- Backend API is exposed under `/api`  
+- Metrics are collected via Prometheus + exporters  
+- Dashboards and alerting are handled by Grafana, accessed locally via SSH tunnel due to server limitations
 
 ## 📈 Architecture
 
@@ -106,7 +104,7 @@ This is not mainly a full-stack project.
 It is a DevOps learning project disguised as a simple web app, used to practice:
 
 - Containerization (Docker)
-- Server deployment (VPS)
+- Server deployment (VPS + Linux)
 - CI/CD pipelines (GitHub Actions)
 - Monitoring (Prometheus + Grafana)
 - Alerting (Grafana alert rules)
